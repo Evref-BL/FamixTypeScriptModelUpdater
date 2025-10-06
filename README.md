@@ -7,10 +7,10 @@ The main task of it is to update Famix and FAST models following modifications.
 ### From playground
 
 ```st
-Metacello new
-  githubUser: 'evref-bl' project: 'FamixTypeScriptModelUpdater' path: 'src';
+Metacello new 
   baseline: 'FamixTypeScriptModelUpdater';
-  load
+  repository: 'github://Evref-BL/FamixTypeScriptModelUpdater:main/src';  
+  load.
 ```
 
 ### Baseline dependency
