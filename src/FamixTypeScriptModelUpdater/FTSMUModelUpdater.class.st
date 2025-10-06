@@ -103,8 +103,6 @@ FTSMUModelUpdater >> updateAssociationFor: newlyCreatedEntity [
 		famixModel: newlyCreatedEntity mooseModel;
 		fastModel: self fastModel;
 		famixEntity: famixEntity;
-		newStartPosition: self newStartPosition;
-  		newEndPosition: self newEndPosition;
 		fileAnchorPath: self fileAnchorPath;
 		newFamixEntity: newlyCreatedEntity;
 		update
