@@ -40,7 +40,6 @@ FTSMUModelAssociationUpdater >> newFamixEntity: anObject [
 FTSMUModelAssociationUpdater >> resolveFamixScopeContainerOf: aFASTEntity [
 
 	| scope |
-	self halt.
 	scope := (aFASTEntity atAnyScope: { 
 			          FASTTypeScriptClassDeclaration .
 			          FASTTypeScriptMethodDefinition }) anyOne. "pay attention"
@@ -82,7 +81,6 @@ FTSMUModelAssociationUpdater >> visitFASTTVariableExpression: aFASTVariableExpre
 FTSMUModelAssociationUpdater >> visitFASTTypeScriptClassDeclaration: aFASTTypeScriptClassDeclaration [
 
 	"resolve declaredType"
-self halt.
 	famixEntity ifNotNil: [ :originalFamixEntity | 
 		originalFamixEntity typedEntities copy do: [ :typedEntity | 
 			typedEntity declaredType:

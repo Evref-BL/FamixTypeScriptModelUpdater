@@ -63,7 +63,6 @@ FTSMUModelUpdater >> resolveTypeNameOf: aType [
 
 { #category : 'model - create' }
 FTSMUModelUpdater >> retrieveClassFromModel: aClassName [
-self halt.
 	"^ (fastModel allWithType: FASTTypeScriptImportClause) ""Pay Attention""
 		  detect: [ :importDeclaration |
 			  importDeclaration qualifiedName name = aClassName ]
@@ -88,7 +87,6 @@ FTSMUModelUpdater >> update [
 
 	| mainFastClassDeclaration newlyCreatedEntity |
 	mainFastClassDeclaration := (self fastModel allWithType: FASTTypeScriptClassDeclaration) first.
-	self halt.
 	newlyCreatedEntity := mainFastClassDeclaration accept: self.
 
 	self updateAssociationFor: newlyCreatedEntity.
