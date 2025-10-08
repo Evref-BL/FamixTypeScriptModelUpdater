@@ -51,11 +51,11 @@ BaselineOfFamixTypeScriptModelUpdater >> definePackages: spec [
 
 	spec
 		package: 'FamixTypeScriptModelUpdater'
-		with: [ spec requires: #( 'Carrefour-TypeScript-Model' ) ].
+		with: [ spec requires: #( 'CarrefourTypeScript' ) ].
 
 	"In case of no Famix loaded"
 	spec for: #NeedsMoose do: [
 			spec
 				package: 'FamixTypeScriptModelUpdater'
-				with: [ spec requires: #( 'Carrefour-TypeScript-Model') ] ]
+				with: [ spec requires: #( 'CarrefourTypeScript') ] ]
 ]
