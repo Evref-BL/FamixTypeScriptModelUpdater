@@ -40,7 +40,6 @@ FTSMUModelAssociationUpdater >> newFamixEntity: anObject [
 FTSMUModelAssociationUpdater >> resolveFamixScopeContainerOf: aFASTEntity [
 
 	| scope |
-	self halt.
 	scope := (aFASTEntity atAnyScope: { 
 			          FASTTypeScriptClassDeclaration .
 			          FASTTypeScriptMethodDefinition }) anyOne. "pay attention"
