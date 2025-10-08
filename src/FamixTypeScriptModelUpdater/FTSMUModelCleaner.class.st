@@ -1,6 +1,8 @@
 Class {
 	#name : 'FTSMUModelCleaner',
 	#superclass : 'Object',
+	#traits : 'FamixTypeScriptTVisitor',
+	#classTraits : 'FamixTypeScriptTVisitor classTrait',
 	#instVars : [
 		'famixEntity'
 	],
@@ -11,8 +13,41 @@ Class {
 
 { #category : 'api' }
 FTSMUModelCleaner >> clean: aFamixEntity [
-
+self halt.
 	aFamixEntity ifNotNil: [ 
 		famixEntity := aFamixEntity.
 		aFamixEntity accept: self ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitEntity: aFamixTypeScriptEntity [
+	^ nil
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTClass: aFamixTypeScriptClass [
+
+	self halt.
+	aFamixTypeScriptClass methods copy do: [ :m | 
+		m parentType: nil.
+		m accept: self ].
+	"aFamixTypeScriptClass attributes copy do: [ :att | 
+		att parentType: nil.
+		att accept: self ]."
+	aFamixTypeScriptClass mooseModel ifNotNil: [ 
+		aFamixTypeScriptClass mooseModel remove: aFamixTypeScriptClass ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTypeScriptLocalVariable: aFamixTypeScriptLocalVariable [
+
+	aFamixTypeScriptLocalVariable mooseModel ifNotNil: [ aFamixTypeScriptLocalVariable mooseModel remove: aFamixTypeScriptLocalVariable ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTypeScriptMethod: aFamixTypeScriptMethod [
+	aFamixTypeScriptMethod localVariables copy do: [ :att | 
+		att parentBehaviouralEntity: nil.
+		att accept: self ].
+	aFamixTypeScriptMethod mooseModel ifNotNil: [ aFamixTypeScriptMethod mooseModel remove: aFamixTypeScriptMethod ]
 ]
