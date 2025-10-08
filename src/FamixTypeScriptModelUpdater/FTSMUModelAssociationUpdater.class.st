@@ -81,8 +81,7 @@ FTSMUModelAssociationUpdater >> visitFASTTVariableExpression: aFASTVariableExpre
 { #category : 'visiting' }
 FTSMUModelAssociationUpdater >> visitFASTTypeScriptClassDeclaration: aFASTTypeScriptClassDeclaration [
 
-	"resolve declaredType"
-self halt.
+	"resolve declaredType" 
 	famixEntity ifNotNil: [ :originalFamixEntity | 
 		originalFamixEntity typedEntities copy do: [ :typedEntity | 
 			typedEntity declaredType:
