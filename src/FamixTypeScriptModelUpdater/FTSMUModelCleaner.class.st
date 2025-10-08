@@ -13,7 +13,6 @@ Class {
 
 { #category : 'api' }
 FTSMUModelCleaner >> clean: aFamixEntity [
-self halt.
 	aFamixEntity ifNotNil: [ 
 		famixEntity := aFamixEntity.
 		aFamixEntity accept: self ]
@@ -27,7 +26,6 @@ FTSMUModelCleaner >> visitEntity: aFamixTypeScriptEntity [
 { #category : 'visiting' }
 FTSMUModelCleaner >> visitFamixTClass: aFamixTypeScriptClass [
 
-	self halt.
 	aFamixTypeScriptClass methods copy do: [ :m | 
 		m parentType: nil.
 		m accept: self ].
