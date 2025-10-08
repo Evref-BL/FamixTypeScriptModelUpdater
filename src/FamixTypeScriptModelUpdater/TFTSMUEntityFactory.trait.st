@@ -57,7 +57,7 @@ TFTSMUEntityFactory >> fastModel: anObject [
 TFTSMUEntityFactory >> fastScopeOwnerOf: aFASTJavaNode [
 
 	^ (aFASTJavaNode atAnyScope: { 
-			   FASTTypeScriptMethodSignature . "Pay attention here perhaps function is also needed or any other; plus pay attention id methodSignature or should be methodDefinition"
+			   FASTTypeScriptMethodDefinition . "Pay attention here perhaps function is also needed or any other;"
 			   FASTTypeScriptClassDeclaration }) ifNotNil: [ :scopes | scopes anyOne ]
 ]
 
@@ -74,7 +74,7 @@ TFTSMUEntityFactory >> fileAnchorPath: anObject [
 ]
 
 { #category : 'model - create' }
-TFTSMUEntityFactory >> generateAnchorBasedOn: famixSourceAnchor for: aFastJavaEntity [
+TFTSMUEntityFactory >> generateAnchorBasedOn: famixSourceAnchor for: aFastTypeScriptEntity [
 
 	| safeStart |
 	
@@ -82,9 +82,9 @@ TFTSMUEntityFactory >> generateAnchorBasedOn: famixSourceAnchor for: aFastJavaEn
 		ifNotNil: [ :pos | pos - 1 ]
 		ifNil: [ 0 ].
 
-	^ (self create: FamixJavaIndexedFileAnchor)
-		  startPos: safeStart + aFastJavaEntity startPos ;
-		  endPos: safeStart + aFastJavaEntity endPos ;
+	^ (self create: FamixTypeScriptIndexedFileAnchor)
+		  startPos: safeStart + aFastTypeScriptEntity startPos ;
+		  endPos: safeStart + aFastTypeScriptEntity endPos ;
 		  fileName: famixSourceAnchor ;
 		  yourself
 ]

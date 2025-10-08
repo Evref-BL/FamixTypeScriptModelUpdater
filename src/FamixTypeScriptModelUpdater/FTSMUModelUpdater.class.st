@@ -117,14 +117,14 @@ FTSMUModelUpdater >> visitFASTTypeScriptClassDeclaration: aFastTypeScriptClassDe
 	famixClass name: aFastTypeScriptClassDeclaration name sourceCode.
 	"famixClass fastTypeDefinition: aFastTypeScriptClassDeclaration."
 
-	"(aFastTypeScriptClassDeclaration declarations select: [ :decl |
-		 decl isKindOf: FASTJavaMethodEntity ]) do: [ :method |
+	(aFastTypeScriptClassDeclaration body genericChildren select: [ :child |
+		 child isKindOf: FASTTypeScriptMethodDefinition ]) do: [ :method |
 		(method accept: self) parentType: famixClass ].
-	(aFastTypeScriptClassDeclaration declarations select: [ :decl |
-		 decl isKindOf: FASTJavaVarDeclStatement ]) do: [ :attributes |
-		attributes declarators do: [ :decl | decl accept: self ] ].
+	"(aFastTypeScriptClassDeclaration body genericChildren select: [ :child |
+		 child isKindOf: FASTTypeScriptPublicFieldDefinition ]) do: [ :attributes |
+		attributes ""declarators"" do: [ :decl | decl accept: self ] ]."
 
-	aFastTypeScriptClassDeclaration superclass ifNotNil: [ :superclass |
+	"aFastTypeScriptClassDeclaration superclass ifNotNil: [ :superclass |
 		(aFastTypeScriptClassDeclaration mooseModel allWithType:
 			 FASTJavaImportDeclaration)
 			detect: [ :importDeclaration |
@@ -155,4 +155,15 @@ FTSMUModelUpdater >> visitFASTTypeScriptClassDeclaration: aFastTypeScriptClassDe
 				implementingClass: famixClass;
 				interface: famixInterface ] ]."
 	^ famixClass
+]
+
+{ #category : 'visiting' }
+FTSMUModelUpdater >> visitFASTTypeScriptMethodDefinition: aFastTypeScriptMethodDefinition [
+	
+	| famixMethod | 
+	famixMethod := self create: FamixTypeScriptMethod from: aFastTypeScriptMethodDefinition.
+	aFastTypeScriptMethodDefinition famix: famixMethod.
+	famixMethod name: aFastTypeScriptMethodDefinition name sourceCode.
+	
+	^ famixMethod
 ]
