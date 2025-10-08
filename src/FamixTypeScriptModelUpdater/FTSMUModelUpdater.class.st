@@ -45,9 +45,8 @@ FTSMUModelUpdater >> famixEntity: anObject [
 ]
 
 { #category : 'initialization' }
-FTSMUModelUpdater >> initialize [
-	self flag: 'to be continuied'.
-	"cleaner := FTSMUModelCleaner new"
+FTSMUModelUpdater >> initialize [ 
+	cleaner := FTSMUModelCleaner new.
 ]
 
 { #category : 'as yet unclassified' }
@@ -62,8 +61,7 @@ FTSMUModelUpdater >> resolveTypeNameOf: aType [
 ]
 
 { #category : 'model - create' }
-FTSMUModelUpdater >> retrieveClassFromModel: aClassName [
-self halt.
+FTSMUModelUpdater >> retrieveClassFromModel: aClassName [ 
 	"^ (fastModel allWithType: FASTTypeScriptImportClause) ""Pay Attention""
 		  detect: [ :importDeclaration |
 			  importDeclaration qualifiedName name = aClassName ]
@@ -88,11 +86,10 @@ FTSMUModelUpdater >> update [
 
 	| mainFastClassDeclaration newlyCreatedEntity |
 	mainFastClassDeclaration := (self fastModel allWithType: FASTTypeScriptClassDeclaration) first.
-	self halt.
 	newlyCreatedEntity := mainFastClassDeclaration accept: self.
 
 	self updateAssociationFor: newlyCreatedEntity.
-"	self cleaner clean: famixEntity."
+	self cleaner clean: famixEntity. 
 	^ newlyCreatedEntity
 ]
 
