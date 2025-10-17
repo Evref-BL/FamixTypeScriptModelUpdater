@@ -81,7 +81,7 @@ TFTSMUEntityFactory >> generateAnchorBasedOn: famixSourceAnchor for: aFastTypeSc
 		             aFastTypeScriptEntity startPos ].
 
 	safeEnd := self newEndPosition ifNil: [ aFastTypeScriptEntity endPos ].
-	self halt.
+	
 	^ (self create: FamixTypeScriptIndexedFileAnchor)
 		  startPos: safeStart;
 		  endPos: safeEnd;

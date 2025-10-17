@@ -84,13 +84,22 @@ FTSMUModelUpdater >> retrieveClassFromModel: aClassName [
 { #category : 'updating' }
 FTSMUModelUpdater >> update [
 
-	| mainFastClassDeclaration newlyCreatedEntity |
-	mainFastClassDeclaration := (self fastModel allWithType: FASTTypeScriptClassDeclaration) first.
-	newlyCreatedEntity := mainFastClassDeclaration accept: self.
+	| declarations entities |
+	declarations := self fastModel allWithSubTypesOfAny: {
+			                FASTTypeScriptClassDeclaration.
+			                FASTTypeScriptInterfaceDeclaration.
+			                FASTTypeScriptEnumDeclaration.
+			                FASTTypeScriptFunctionDeclaration }.
+	self halt.
 
-	self updateAssociationFor: newlyCreatedEntity.
-	self cleaner clean: famixEntity. 
-	^ newlyCreatedEntity
+	entities := declarations collect: [ :each |
+		            | newlyCreatedEntity |
+		            newlyCreatedEntity := each accept: self.
+		            self updateAssociationFor: newlyCreatedEntity ].
+
+	self cleaner clean: famixEntity.
+
+	^ entities
 ]
 
 { #category : 'as yet unclassified' }
@@ -114,7 +123,7 @@ FTSMUModelUpdater >> visitFASTTypeScriptClassDeclaration: aFastTypeScriptClassDe
 		              from: aFastTypeScriptClassDeclaration.
 	famixClass name: aFastTypeScriptClassDeclaration name sourceCode.
 	"famixClass fastTypeDefinition: aFastTypeScriptClassDeclaration."
-
+	
 	(aFastTypeScriptClassDeclaration body genericChildren select: [
 		 :child | child isKindOf: FASTTypeScriptMethodDefinition ]) do: [
 		:method | (method accept: self) parentType: famixClass ].
