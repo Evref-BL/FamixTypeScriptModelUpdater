@@ -30,31 +30,48 @@ FTSMUModelCleaner >> visitEntity: aFamixTypeScriptEntity [
 ]
 
 { #category : 'visiting' }
-FTSMUModelCleaner >> visitFamixTClass: aFamixTypeScriptClass [ 
+FTSMUModelCleaner >> visitFamixTypeScriptClass: aFamixTypeScriptClass [
 
-	aFamixTypeScriptClass methods copy do: [ :m | 
+	aFamixTypeScriptClass methods copy do: [ :m |
 		m parentType: nil.
 		m accept: self ].
 	"aFamixTypeScriptClass attributes copy do: [ :att | 
 		att parentType: nil.
 		att accept: self ]."
-	aFamixTypeScriptClass mooseModel ifNotNil: [ 
+	aFamixTypeScriptClass mooseModel ifNotNil: [
 		aFamixTypeScriptClass mooseModel remove: aFamixTypeScriptClass ]
-
 ]
 
 { #category : 'visiting' }
-FTSMUModelCleaner >> visitFamixTypeScriptLocalVariable: aFamixTypeScriptLocalVariable [ 
+FTSMUModelCleaner >> visitFamixTypeScriptEnum: aFamixTypeScriptEnum [
 
-	aFamixTypeScriptLocalVariable mooseModel ifNotNil: [ aFamixTypeScriptLocalVariable mooseModel remove: aFamixTypeScriptLocalVariable ]
-
+	aFamixTypeScriptEnum mooseModel ifNotNil: [
+		aFamixTypeScriptEnum mooseModel remove: aFamixTypeScriptEnum ]
 ]
 
 { #category : 'visiting' }
-FTSMUModelCleaner >> visitFamixTypeScriptMethod: aFamixTypeScriptMethod [ 
-	aFamixTypeScriptMethod localVariables copy do: [ :att | 
+FTSMUModelCleaner >> visitFamixTypeScriptInterface: aFamixTypeScriptInterface [
+
+
+	aFamixTypeScriptInterface mooseModel ifNotNil: [
+		aFamixTypeScriptInterface mooseModel remove:
+			aFamixTypeScriptInterface ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTypeScriptLocalVariable: aFamixTypeScriptLocalVariable [
+
+	aFamixTypeScriptLocalVariable mooseModel ifNotNil: [
+		aFamixTypeScriptLocalVariable mooseModel remove:
+			aFamixTypeScriptLocalVariable ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTypeScriptMethod: aFamixTypeScriptMethod [
+
+	aFamixTypeScriptMethod localVariables copy do: [ :att |
 		att parentBehaviouralEntity: nil.
 		att accept: self ].
-	aFamixTypeScriptMethod mooseModel ifNotNil: [ aFamixTypeScriptMethod mooseModel remove: aFamixTypeScriptMethod ]
-
+	aFamixTypeScriptMethod mooseModel ifNotNil: [
+		aFamixTypeScriptMethod mooseModel remove: aFamixTypeScriptMethod ]
 ]
