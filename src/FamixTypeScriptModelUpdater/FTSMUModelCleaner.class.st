@@ -13,7 +13,7 @@ Class {
 
 { #category : 'testing' }
 FTSMUModelCleaner class >> isDeprecated [
-	^ true
+	^ false
 ]
 
 { #category : 'api' }
