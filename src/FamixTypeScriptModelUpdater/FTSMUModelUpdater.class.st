@@ -90,7 +90,7 @@ FTSMUModelUpdater >> update [
 			                FASTTypeScriptInterfaceDeclaration.
 			                FASTTypeScriptEnumDeclaration.
 			                FASTTypeScriptFunctionDeclaration }.
-	self halt.
+	
 
 	entities := declarations collect: [ :each |
 		            | newlyCreatedEntity |
@@ -122,60 +122,70 @@ FTSMUModelUpdater >> visitFASTTypeScriptClassDeclaration: aFastTypeScriptClassDe
 		              create: FamixTypeScriptClass
 		              from: aFastTypeScriptClassDeclaration.
 	famixClass name: aFastTypeScriptClassDeclaration name sourceCode.
-	"famixClass fastTypeDefinition: aFastTypeScriptClassDeclaration."
-	
+	famixClass fast: aFastTypeScriptClassDeclaration.
+
 	(aFastTypeScriptClassDeclaration body genericChildren select: [
 		 :child | child isKindOf: FASTTypeScriptMethodDefinition ]) do: [
 		:method | (method accept: self) parentType: famixClass ].
 
-	"(aFastTypeScriptClassDeclaration body genericChildren select: [
-		 :child | child isKindOf: FASTTypeScriptPublicFieldDefinition ])
-		do: [ :attributes |
-			attributes do: [ :decl | decl accept: self ] ""declarators"" ]."
+	"In java we are looking also for declarations, superclasses and interfaces; this is currently not supported in FASTTypeScript.
+	Perhaps we can look for genericChildren of specific types, but it is not clear yet ... 
+	This is why we stopped here."
 
-	"aFastTypeScriptClassDeclaration superclass ifNotNil: [ :superclass |
-		(aFastTypeScriptClassDeclaration mooseModel allWithType:
-			 FASTJavaImportDeclaration)
-			detect: [ :importDeclaration |
-				importDeclaration qualifiedName name = superclass typeName name ]
-			ifFound: [ :importDeclaration |
-				famixClass mooseModel allPackages
-					detect: [ :pa |
-						pa qualifiedName
-						= importDeclaration qualifiedName namespace fullName ]
-					ifFound: [ :package |
-						package types
-							detect: [ :type | type name = superclass typeName name ]
-							ifOne: [ :type |
-								(self create: FamixJavaInheritance)
-									subclass: famixClass;
-									superclass: type ] ] ]
-			ifNone: [
-				famixClass mooseModel allModelClasses asOrderedCollection
-					detect: [ :class | class name = superclass typeName name ]
-					ifOne: [ :class |
-						(self create: FamixJavaInheritance)
-							subclass: famixClass;
-							superclass: class ] ] ].
-	aFastTypeScriptClassDeclaration interfaces do: [ :interface |
-		(self retrieveClassFromModel: interface typeName name) ifNotNil: [
-			:famixInterface |
-			(self create: FamixJavaImplementation)
-				implementingClass: famixClass;
-				interface: famixInterface ] ]."
 	^ famixClass
+]
+
+{ #category : 'visiting' }
+FTSMUModelUpdater >> visitFASTTypeScriptEnumDeclaration: aFastTypeScriptEnumDeclaration [
+
+	| famixEnum |
+	famixEnum := self
+		                  create: FamixTypeScriptEnum 
+		                  from: aFastTypeScriptEnumDeclaration.
+	famixEnum name:
+		aFastTypeScriptEnumDeclaration name sourceCode.
+	famixEnum fast: aFastTypeScriptEnumDeclaration.
+
+	"here we have to search for method signature"
+	
+	"(aFastTypeScriptInterfaceDeclaration body genericChildren select: [
+		 :child | child isKindOf: FASTTypeScriptMethodDefinition ]) do: [
+		:method | (method accept: self) parentType: famixEnum ]."
+
+	^ famixEnum
+]
+
+{ #category : 'visiting' }
+FTSMUModelUpdater >> visitFASTTypeScriptInterfaceDeclaration: aFastTypeScriptInterfaceDeclaration [
+
+	| famixInterface |
+	famixInterface := self
+		                  create: FamixTypeScriptInterface
+		                  from: aFastTypeScriptInterfaceDeclaration.
+	famixInterface name:
+		aFastTypeScriptInterfaceDeclaration name sourceCode.
+	famixInterface fast: aFastTypeScriptInterfaceDeclaration.
+
+	"here we have to search for method signature"
+	
+	"(aFastTypeScriptInterfaceDeclaration body genericChildren select: [
+		 :child | child isKindOf: FASTTypeScriptMethodDefinition ]) do: [
+		:method | (method accept: self) parentType: famixInterface ]."
+
+	^ famixInterface
 ]
 
 { #category : 'visiting' }
 FTSMUModelUpdater >> visitFASTTypeScriptMethodDefinition: aFastTypeScriptMethodDefinition [
 
 	| famixMethod |
-	
 	famixMethod := self
 		               create: FamixTypeScriptMethod
 		               from: aFastTypeScriptMethodDefinition.
 	aFastTypeScriptMethodDefinition famix: famixMethod.
 	famixMethod name: aFastTypeScriptMethodDefinition name sourceCode.
+
+	"in java we are looking additionaly among for parameters, java annotation, exceptions, type, modifiers"
 
 	^ famixMethod
 ]
