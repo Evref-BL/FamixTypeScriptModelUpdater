@@ -90,13 +90,12 @@ FTSMUModelUpdater >> update [
 			                FASTTypeScriptInterfaceDeclaration.
 			                FASTTypeScriptEnumDeclaration.
 			                FASTTypeScriptFunctionDeclaration }.
-	
+
 
 	entities := declarations collect: [ :each |
 		            | newlyCreatedEntity |
 		            newlyCreatedEntity := each accept: self.
 		            self updateAssociationFor: newlyCreatedEntity ].
-
 	self cleaner clean: famixEntity.
 
 	^ entities
