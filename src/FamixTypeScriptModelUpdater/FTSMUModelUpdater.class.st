@@ -139,19 +139,35 @@ FTSMUModelUpdater >> visitFASTTypeScriptEnumDeclaration: aFastTypeScriptEnumDecl
 
 	| famixEnum |
 	famixEnum := self
-		                  create: FamixTypeScriptEnum 
-		                  from: aFastTypeScriptEnumDeclaration.
-	famixEnum name:
-		aFastTypeScriptEnumDeclaration name sourceCode.
+		             create: FamixTypeScriptEnum
+		             from: aFastTypeScriptEnumDeclaration.
+		self halt.
+	famixEnum sourceText: aFastTypeScriptEnumDeclaration sourceCode. 	
+	famixEnum name: aFastTypeScriptEnumDeclaration name sourceCode.
 	famixEnum fast: aFastTypeScriptEnumDeclaration.
 
 	"here we have to search for method signature"
-	
+
 	"(aFastTypeScriptInterfaceDeclaration body genericChildren select: [
 		 :child | child isKindOf: FASTTypeScriptMethodDefinition ]) do: [
 		:method | (method accept: self) parentType: famixEnum ]."
 
 	^ famixEnum
+]
+
+{ #category : 'visiting' }
+FTSMUModelUpdater >> visitFASTTypeScriptFunctionDeclaration: aFastTypeScriptFunctionDeclaration [
+
+	| famixFunction |
+	famixFunction := self
+		               create: FamixTypeScriptMethod
+		               from: aFastTypeScriptFunctionDeclaration.
+	aFastTypeScriptFunctionDeclaration famix: famixFunction.
+	famixFunction name: aFastTypeScriptFunctionDeclaration name sourceCode.
+
+	"in java (for methods) we are looking additionaly among for parameters, java annotation, exceptions, type, modifiers"
+	
+	^ famixFunction
 ]
 
 { #category : 'visiting' }

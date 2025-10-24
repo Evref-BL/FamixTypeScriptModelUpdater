@@ -50,8 +50,15 @@ FTSMUModelCleaner >> visitFamixTypeScriptEnum: aFamixTypeScriptEnum [
 ]
 
 { #category : 'visiting' }
-FTSMUModelCleaner >> visitFamixTypeScriptInterface: aFamixTypeScriptInterface [
+FTSMUModelCleaner >> visitFamixTypeScriptFunction: aFamixTypeScriptFunction [
 
+	aFamixTypeScriptFunction mooseModel ifNotNil: [
+		aFamixTypeScriptFunction mooseModel remove:
+			aFamixTypeScriptFunction ]
+]
+
+{ #category : 'visiting' }
+FTSMUModelCleaner >> visitFamixTypeScriptInterface: aFamixTypeScriptInterface [
 
 	aFamixTypeScriptInterface mooseModel ifNotNil: [
 		aFamixTypeScriptInterface mooseModel remove:
