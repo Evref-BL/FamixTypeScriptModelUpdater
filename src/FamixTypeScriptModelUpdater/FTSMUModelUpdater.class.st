@@ -96,7 +96,7 @@ FTSMUModelUpdater >> update [
 		            | newlyCreatedEntity |
 		            newlyCreatedEntity := each accept: self.
 		            self updateAssociationFor: newlyCreatedEntity ].
-	"self cleaner clean: famixEntity."
+	self cleaner clean: famixEntity.
 
 	^ entities
 ]
