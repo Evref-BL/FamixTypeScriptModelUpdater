@@ -11,11 +11,6 @@ Class {
 	#tag : 'Cleaner'
 }
 
-{ #category : 'testing' }
-FTSMUModelCleaner class >> isDeprecated [
-	^ false
-]
-
 { #category : 'api' }
 FTSMUModelCleaner >> clean: aFamixEntity [ 
 	aFamixEntity ifNotNil: [ 
