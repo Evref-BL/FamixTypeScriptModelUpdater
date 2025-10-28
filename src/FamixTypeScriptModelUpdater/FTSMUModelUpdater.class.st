@@ -96,7 +96,7 @@ FTSMUModelUpdater >> update [
 		            | newlyCreatedEntity |
 		            newlyCreatedEntity := each accept: self.
 		            self updateAssociationFor: newlyCreatedEntity ].
-	self cleaner clean: famixEntity.
+	"self cleaner clean: famixEntity."
 
 	^ entities
 ]
@@ -141,8 +141,8 @@ FTSMUModelUpdater >> visitFASTTypeScriptEnumDeclaration: aFastTypeScriptEnumDecl
 	famixEnum := self
 		             create: FamixTypeScriptEnum
 		             from: aFastTypeScriptEnumDeclaration.
-		self halt.
-	famixEnum sourceText: aFastTypeScriptEnumDeclaration sourceCode. 	
+
+	famixEnum sourceText: aFastTypeScriptEnumDeclaration sourceCode.
 	famixEnum name: aFastTypeScriptEnumDeclaration name sourceCode.
 	famixEnum fast: aFastTypeScriptEnumDeclaration.
 

@@ -11,9 +11,9 @@ Class {
 	#tag : 'Cleaner'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'api' }
 FTSMUModelCleaner >> clean: aFamixEntity [
-	aFamixEntity ifNotNil: [ 
+	aFamixEntity ifNotNil: [
 		famixEntity := aFamixEntity.
 		aFamixEntity accept: self ]
 ]
